@@ -1,19 +1,16 @@
 # HTTPilot: A Simple HTTP/1.1 Client for Java
 
-## What's this?
-
-This is a very simple HTTP/1.1 client for Java.
-
 ## Getting Started
-
-### Maven
 
 ```xml
 <repositories>
   <repository>
     <id>seratch.github.com releases</id>
-    <name>seratch.github.com releases</name>
     <url>http://seratch.github.com/mvn-repo/releases</url>
+  </repository>
+  <repository>
+    <id>seratch.github.com snapshots</id>
+    <url>http://seratch.github.com/mvn-repo/snapshots</url>
   </repository>
 </repositories>
 
@@ -25,8 +22,6 @@ This is a very simple HTTP/1.1 client for Java.
 ```
 
 ## Usage
-
-How to use HTTPilotis pretty simple.
 
 ### GET
 
@@ -59,13 +54,16 @@ The default value for "Accept-Charset" is "UTF-8". Off course, it's possible to 
 ```java
 Request request = new Request("http://example.com/", "EUC-JP");
 ```
+
 or
+
 ```java
 Request request = new Request("http://example.com/");
 request.setCharset("EUC-JP");
 ```
 
 It's also possible to overwrite other headers.
+
 ```java
 request.setHeader("Authorization", "OAuth oauth_consumer_key=...")
 ```
@@ -73,6 +71,7 @@ request.setHeader("Authorization", "OAuth oauth_consumer_key=...")
 ### POST
 
 The following code is an example of sending a POST request.
+
 ```java
 Map<String, Object> formParams = new HashMap<String, Object>();
 formParams.put("name", "Andy");
@@ -84,6 +83,7 @@ Response response = HTTP.post(request);
 ```
 
 The above code will send the following HTTP request.
+
 ```
 POST /register HTTP/1.1
 User-Agent: HTTPilot (https://github.com/seratch/httpilot)
@@ -98,6 +98,7 @@ name=Andy&age=20
 ```
 
 "multipart/form-data" is also available.
+
 ```java
 List<FormData> data = new ArrayList<FormData>();
 data.add(new FormData("name", new TextInput("Andy", "UTF-8")));
@@ -108,6 +109,7 @@ Response response = HTTP.post(request);
 ```
 
 The above code will send the following HTTP request.
+
 ```
 POST / HTTP/1.1
 User-Agent: HTTPilot (https://github.com/seratch/httpilot)
@@ -131,6 +133,7 @@ content-type: image/jpeg
 ```
 
 The following code is an example of setting the message body of the request directly.
+
 ```java
 Request request = new Request("http://example.com/register");
 String xml = "<?xml version="1.0" encoding="UTF-8" standalone="no" ?><user><id>1234</id><name>Andy</name></user>";
@@ -139,6 +142,7 @@ Response response = HTTP.post(request);
 ```
 
 The above code will send the following HTTP request.
+
 ```
 POST / HTTP/1.1
 User-Agent: HTTPilot (https://github.com/seratch/httpilot)
@@ -193,17 +197,32 @@ Request request = new Request("http://example.com/");
 Response response = HTTP.trace(request);
 
 response.getTextBody();
-/* ->
-TRACE / HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-
- */
+// TRACE / HTTP/1.1
+// User-Agent: HTTPilot (https://github.com/seratch/httpilot)
+// Accept-Charset: UTF-8
+// Host: example.com
+// Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+// Connection: keep-alive
+// 
 ```
 
+## License
 
 
-
+```java
+/*
+ * Copyright 2011 Kazuhiro Sera
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+```
