@@ -1,11 +1,11 @@
 package server.handler;
 
 import httpilot.Method;
+import org.eclipse.jetty.server.Request;
 
-import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.eclipse.jetty.server.Request;
+import java.util.Enumeration;
 
 public class OptionsMethodHandler extends MethodHandler {
 
@@ -16,16 +16,8 @@ public class OptionsMethodHandler extends MethodHandler {
 
 	@SuppressWarnings("unchecked")
 	public void _handle(Boolean isAllowed, Method method,
-			Request baseRequest, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		System.out.println("---(HTTP Headers)--------");
-		Enumeration<String> iter = request.getHeaderNames();
-		while (iter.hasMoreElements()) {
-			String headerName = iter.nextElement();
-			System.out.println(headerName + "->"
-					+ request.getHeader(headerName));
-		}
-		System.out.println("-------------------------");
+	                    Request baseRequest, HttpServletRequest request,
+	                    HttpServletResponse response) throws Exception {
 		if (isAllowed) {
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setHeader("Allow", "GET, HEAD, OPTIONS, TRACE");

@@ -1,10 +1,11 @@
 package httpilot;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 import httpilot.FormData.FileInput;
 import httpilot.FormData.TextInput;
+import org.junit.Test;
+import server.HttpServer;
+import server.PostFormdataServer;
+import server.handler.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,16 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import server.HttpServer;
-import server.PostFormdataServer;
-import server.handler.DeleteMethodHandler;
-import server.handler.GetMethodHandler;
-import server.handler.HeadMethodHandler;
-import server.handler.OptionsMethodHandler;
-import server.handler.PostMethodHandler;
-import server.handler.PutMethodHandler;
-import server.handler.TraceMethodHandler;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 public class HTTPTest {
 
@@ -52,6 +45,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response response = HTTP.get(request);
@@ -60,6 +54,29 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
+		}
+	}
+
+	@Test
+	public void get_A$Request_queryString() throws Exception {
+		final HttpServer server = new HttpServer(new GetMethodHandler());
+		try {
+			Runnable runnable = getRunnable(server);
+			new Thread(runnable).start();
+			Thread.sleep(100L);
+
+			Request request = new Request("http://localhost:8888/?foo=var");
+			Map<String, Object> queryParams = new HashMap<String, Object>();
+			queryParams.put("toReturn", "Andy");
+			request.setQueryParams(queryParams);
+			Response response = HTTP.get(request);
+			assertThat(response.getStatus(), is(200));
+			assertThat(response.getHeaders().size(), is(greaterThan(0)));
+			assertThat(response.getTextBody(), is("Andy"));
+		} finally {
+			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -135,6 +152,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Map<String, Object> formParams = new HashMap<String, Object>();
 			formParams.put("userName", "日本語");
@@ -144,6 +162,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("userName:日本語"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -153,6 +172,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			List<FormData> formDataList = new ArrayList<FormData>();
@@ -169,6 +189,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("日本語"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -178,6 +199,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			List<FormData> multipart = new ArrayList<FormData>();
@@ -194,6 +216,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("日本語"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -203,6 +226,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response getResponse = HTTP.get(request);
@@ -216,6 +240,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is(""));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -225,6 +250,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response getResponse = HTTP.get(request);
@@ -235,6 +261,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -244,6 +271,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response getResponse = HTTP.get(request);
@@ -254,6 +282,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is(""));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -263,6 +292,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response getResponse = HTTP.get(request);
@@ -275,6 +305,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 
@@ -284,6 +315,7 @@ public class HTTPTest {
 		try {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
+			Thread.sleep(100L);
 
 			Request request = new Request("http://localhost:8888/");
 			Response getResponse = HTTP.get(request);
@@ -294,6 +326,7 @@ public class HTTPTest {
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {
 			server.stop();
+			Thread.sleep(100L);
 		}
 	}
 

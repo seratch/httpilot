@@ -67,7 +67,6 @@ public class HTTP {
 		String exceptionMessage = "";
 		InputStream is = null;
 		try {
-			// POST request message body
 			if (request.getSpecifiedBody() != null) {
 				conn.setDoOutput(true);
 				conn.setRequestProperty("Content-Type",
@@ -141,4 +140,5 @@ public class HTTP {
 			return response;
 		}
 	}
+
 }

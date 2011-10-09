@@ -18,11 +18,7 @@ package httpilot;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Request {
 
@@ -72,7 +68,7 @@ public class Request {
 
 	private int readTimeoutMillis = 10000;
 
-	private String referer;
+	private String referrer;
 
 	private String userAgent = "HTTPilot (https://github.com/seratch/httpilot)";
 
@@ -120,12 +116,12 @@ public class Request {
 		this.readTimeoutMillis = readTimeoutMillis;
 	}
 
-	public String getReferer() {
-		return referer;
+	public String getReferrer() {
+		return referrer;
 	}
 
-	public void setReferer(String referer) {
-		this.referer = referer;
+	public void setReferrer(String referrer) {
+		this.referrer = referrer;
 	}
 
 	public String getUserAgent() {

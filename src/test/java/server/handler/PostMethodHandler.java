@@ -1,10 +1,10 @@
 package server.handler;
 
 import httpilot.Method;
+import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.eclipse.jetty.server.Request;
 
 public class PostMethodHandler extends MethodHandler {
 
@@ -15,7 +15,7 @@ public class PostMethodHandler extends MethodHandler {
 
 	@Override
 	public void handle(String target, Request baseRequest,
-			HttpServletRequest request, HttpServletResponse response) {
+	                   HttpServletRequest request, HttpServletResponse response) {
 		try {
 			if (request.getMethod().equals(getMethod().toString())) {
 				String userName = request.getParameter("userName");

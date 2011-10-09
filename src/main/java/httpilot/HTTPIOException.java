@@ -23,11 +23,11 @@ public class HTTPIOException extends IOException {
 
 	private String message;
 
-	private Response repsonse;
+	private Response response;
 
 	public HTTPIOException(String message, Response response) {
 		setMessage(message);
-		setRepsonse(response);
+		setResponse(response);
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class HTTPIOException extends IOException {
 		this.message = message;
 	}
 
-	public Response getRepsonse() {
-		return repsonse;
+	public Response getResponse() {
+		return response;
 	}
 
-	public void setRepsonse(Response repsonse) {
-		this.repsonse = repsonse;
+	public void setResponse(Response response) {
+		this.response = response;
 	}
 
 }

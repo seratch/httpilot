@@ -65,6 +65,27 @@ Connection: keep-alive
 
 ```
 
+It's also possible to append the query string with a Map object.
+
+```java
+Request request = new Request("http://example.com/?name=Andy");
+Map<String, Object> queryParams = new HashMap<String, Object>();
+queryParams.put("age", 20);
+request.setQueryParams(queryParams);
+````
+
+The above code will send the following HTTP request.
+
+```
+GET /?name=Andy&age=20 HTTP/1.1
+User-Agent: HTTPilot (https://github.com/seratch/httpilot)
+Accept-Charset: UTF-8
+Host: example.com
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Connection: keep-alive
+
+```
+
 The default value for "Accept-Charset" is "UTF-8". Off course, it's possible to specify other encoding values.
 
 ```java
