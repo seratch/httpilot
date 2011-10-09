@@ -1,6 +1,7 @@
 package server.handler;
 
-import com.github.seratch.httpilot.request.Method;
+import httpilot.Method;
+
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

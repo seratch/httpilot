@@ -13,16 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.github.seratch.httpilot.request;
+package httpilot;
 
-import com.github.seratch.httpilot.util.IO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
-public class Body {
+public class RequestBody {
 
 	private static final String CRLF = "\r\n";
 
@@ -32,7 +31,7 @@ public class Body {
 
 	private byte[] specifiedBody = null;
 
-	public Body(Request request) {
+	public RequestBody(Request request) {
 		this.request = request;
 	}
 

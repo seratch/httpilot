@@ -1,6 +1,6 @@
 package server.handler;
 
-import com.github.seratch.httpilot.request.Method;
+import httpilot.Method;
 
 public class HeadMethodHandler extends MethodHandler {
 

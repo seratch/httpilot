@@ -1,13 +1,11 @@
-package com.github.seratch.httpilot;
+package httpilot;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import com.github.seratch.httpilot.request.FormData;
-import com.github.seratch.httpilot.request.FormData.FileInput;
-import com.github.seratch.httpilot.request.FormData.TextInput;
-import com.github.seratch.httpilot.request.Method;
-import com.github.seratch.httpilot.request.Request;
-import com.github.seratch.httpilot.response.Response;
+
+import httpilot.FormData.FileInput;
+import httpilot.FormData.TextInput;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.Test;
 import server.HttpServer;
 import server.PostFormdataServer;

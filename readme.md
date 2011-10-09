@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+### Maven
+
 ```xml
 <repositories>
   <repository>
@@ -14,11 +16,26 @@
   </repository>
 </repositories>
 
-<dependency>
-  <groupId>com.github.seratch</groupId>
-  <artifactId>httpilot</artifactId>
-  <version>1.0-SNAPSHOT</version>
-</dependency>
+<dependencies>
+  <dependency>
+    <groupId>com.github.seratch</groupId>
+    <artifactId>httpilot</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </dependency>
+</dependencies>
+```
+
+### Grape
+
+```groovy
+#!/usr/bin/env groovy
+
+@GrabResolver(name='seratch_snapshots', root='http://seratch.github.com/mvn-repo/snapshots', m2Compatible='true')
+@Grab('com.github.seratch:httpilot:1.0-SNAPSHOT')
+
+import httpilot.*;
+response = HTTP.get(new Request("http://seratch.github.com"));
+println(response.getTextBody());
 ```
 
 ## Usage
@@ -28,6 +45,7 @@
 The following code is an example of sending a GET request.
 
 ```java
+import httpilot.*;
 Request request = new Request("http://example.com/");
 Response response = HTTP.get(request);
 

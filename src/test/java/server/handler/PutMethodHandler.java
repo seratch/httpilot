@@ -1,6 +1,7 @@
 package server.handler;
 
-import com.github.seratch.httpilot.request.Method;
+import httpilot.Method;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

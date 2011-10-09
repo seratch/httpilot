@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.github.seratch.httpilot.request;
+package httpilot;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -82,7 +82,7 @@ public class Request {
 
 	private Map<String, Object> queryParams = new HashMap<String, Object>();
 
-	private Body body = new Body(this);
+	private RequestBody requestBody = new RequestBody(this);
 
 	private Map<String, Object> formParams = new HashMap<String, Object>();
 
@@ -164,20 +164,20 @@ public class Request {
 		this.queryParams = queryParams;
 	}
 
-	public Body getBody() {
-		return body;
+	public RequestBody getRequestBody() {
+		return requestBody;
 	}
 
 	public void setBody(byte[] body, String contentType) {
-		this.body.setBody(body, contentType);
+		this.requestBody.setBody(body, contentType);
 	}
 
 	public byte[] getSpecifiedBody() {
-		return body.getSpecifiedBody();
+		return requestBody.getSpecifiedBody();
 	}
 
 	public String getSpecifiedContentType() {
-		return body.getSpecifiedContentType();
+		return requestBody.getSpecifiedContentType();
 	}
 
 	public Map<String, Object> getFormParams() {

@@ -1,6 +1,7 @@
 package server.handler;
 
-import com.github.seratch.httpilot.request.Method;
+import httpilot.Method;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;

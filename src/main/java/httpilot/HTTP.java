@@ -13,12 +13,8 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.github.seratch.httpilot;
+package httpilot;
 
-import com.github.seratch.httpilot.request.Method;
-import com.github.seratch.httpilot.request.Request;
-import com.github.seratch.httpilot.response.Response;
-import com.github.seratch.httpilot.util.IO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,7 +83,7 @@ public class HTTP {
 				conn.setDoOutput(true);
 				conn.setRequestProperty("Content-Type",
 						"application/x-www-form-urlencoded");
-				byte[] body = request.getBody()
+				byte[] body = request.getRequestBody()
 						.asApplicationXWwwFormUrlencoded();
 				OutputStream os = conn.getOutputStream();
 				try {
@@ -101,7 +97,7 @@ public class HTTP {
 						+ System.currentTimeMillis();
 				conn.setRequestProperty("Content-Type",
 						"multipart/form-data; boundary=" + boundary);
-				byte[] body = request.getBody().asMultipart(boundary);
+				byte[] body = request.getRequestBody().asMultipart(boundary);
 				conn.setDoOutput(true);
 				OutputStream os = conn.getOutputStream();
 				try {

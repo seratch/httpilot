@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.github.seratch.httpilot.util;
+package httpilot;
 
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -13,9 +13,8 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.github.seratch.httpilot;
+package httpilot;
 
-import com.github.seratch.httpilot.response.Response;
 import java.io.IOException;
 
 public class HTTPIOException extends IOException {
