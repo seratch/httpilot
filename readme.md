@@ -28,8 +28,6 @@
 ### Grape
 
 ```groovy
-#!/usr/bin/env groovy
-
 @GrabResolver(name='seratch_snapshots', root='http://seratch.github.com/mvn-repo/snapshots', m2Compatible='true')
 @Grab('com.github.seratch:httpilot:1.0-SNAPSHOT')
 
