@@ -199,8 +199,8 @@ The same as sending POST request.
 
 ```java
 Request request = new Request("http://example.com/register");
-String xml = "{\"id\": \"12345\, \"name\": \"Andy\"}";
-request.setBody(xml.getBytes(), "text/json");
+String json = "{\"id\": \"12345\, \"name\": \"Andy\"}";
+request.setBody(json.getBytes(), "text/json");
 Response response = HTTP.put(request);
 ```
 
