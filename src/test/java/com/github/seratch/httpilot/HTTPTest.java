@@ -106,14 +106,6 @@ public class HTTPTest {
 	}
 
 	@Test
-	public void tmp() throws Exception {
-		Request request = new Request("http://seratch.net/");
-		Response response = HTTP.trace(request);
-		assertThat(response.getStatus(), is(200));
-		System.out.println(response.getTextBody());
-	}
-
-	@Test
 	public void get_A$Request_jpg() throws Exception {
 		Request request = new Request("http://seratch.net/images/self_face.jpg");
 		Response response = HTTP.get(request);
@@ -188,15 +180,14 @@ public class HTTPTest {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
 
-			// Request request = new Request("http://localhost:8888/");
-			Request request = new Request("http://seratch.net/");
+			Request request = new Request("http://localhost:8888/");
 			List<FormData> multipart = new ArrayList<FormData>();
 			FormData entry1 = new FormData("toResponse", new TextInput("日本語",
 					"UTF-8"));
 			entry1.setTextBody("日本語", "UTF-8");
 			multipart.add(entry1);
-			FormData entry2 = new FormData("readme", new FileInput(new File(
-					"readme.md"), "text/plain"));
+			FormData entry2 = new FormData("gitignore", new FileInput(new File(
+					".gitignore"), "text/plain"));
 			multipart.add(entry2);
 			request.setMultipartFormData(multipart);
 			Response response = HTTP.post(request);
@@ -214,11 +205,10 @@ public class HTTPTest {
 			Runnable runnable = getRunnable(server);
 			new Thread(runnable).start();
 
-			// Request request = new Request("http://localhost:8888/");
-			Request request = new Request("http://seratch.net/");
-			// Response getResponse = HTTP.get(request);
-			// assertThat(getResponse.getStatus(), is(405));
-			// assertThat(getResponse.getTextBody(), is("だｍ"));
+			Request request = new Request("http://localhost:8888/");
+			Response getResponse = HTTP.get(request);
+			assertThat(getResponse.getStatus(), is(405));
+			assertThat(getResponse.getTextBody(), is("だｍ"));
 			request.setBody(
 					"<user><id>1234</id><name>Andy</name></user>".getBytes(),
 					"text/xml");

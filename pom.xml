@@ -15,6 +15,17 @@
     <jetty.version>7.5.2.v20111006</jetty.version>
   </properties>
 
+  <distributionManagement>
+    <repository>
+      <id>repo</id>
+      <url>http://seratch.github.com/mvn-repo/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshot-repo</id>
+      <url>http://seratch.github.com/mvn-repo/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
