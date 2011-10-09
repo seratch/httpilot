@@ -1,4 +1,4 @@
-# HTTPilot: A Simple HTTP/1.1 Client for Java
+# HTTPilot: A Pretty Simple HTTP/1.1 Client for Java
 
 ## Getting Started
 
