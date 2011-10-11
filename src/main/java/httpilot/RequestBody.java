@@ -54,7 +54,10 @@ public class RequestBody {
 		for (String key : request.getFormParams().keySet()) {
 			sb.append(urlEncode(key));
 			sb.append("=");
-			sb.append(urlEncode(formParams.get(key).toString()));
+			Object value = formParams.get(key);
+			if (value != null ) {
+				sb.append(urlEncode(formParams.get(key).toString()));
+			}
 			sb.append("&");
 		}
 		return sb.toString().replaceFirst("&$", "").getBytes();
