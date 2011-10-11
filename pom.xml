@@ -26,6 +26,12 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>junithelper.org releases</id>
+            <url>http://junithelper.googlecode.com/svn/trunk/mvn-repo/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -67,6 +73,10 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.junithelper</groupId>
+                <artifactId>maven-junithelper-plugin</artifactId>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>

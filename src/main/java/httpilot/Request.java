@@ -22,8 +22,7 @@ import java.util.*;
 
 public class Request {
 
-	public Request() {
-	}
+	private static final String DEFAULT_USER_AGENT = "HTTPilot (https://github.com/seratch/httpilot)";
 
 	public Request(String url) {
 		setUrl(url);
@@ -70,7 +69,7 @@ public class Request {
 
 	private String referrer;
 
-	private String userAgent = "HTTPilot (https://github.com/seratch/httpilot)";
+	private String userAgent = DEFAULT_USER_AGENT;
 
 	private String charset = "UTF-8";
 
@@ -145,7 +144,16 @@ public class Request {
 	}
 
 	public String getHeader(String name) {
-		return headers.get(name);
+		String specifiedHeaderValue = headers.get(name);
+		if (specifiedHeaderValue != null) {
+			return specifiedHeaderValue;
+		} else {
+			try {
+				return toHttpURLConnection(Method.GET).getHeaderField(name);
+			} catch (IOException e) {
+				return null;
+			}
+		}
 	}
 
 	public void setHeader(String name, String value) {

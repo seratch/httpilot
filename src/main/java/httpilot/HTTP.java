@@ -69,8 +69,7 @@ public class HTTP {
 		try {
 			if (request.getSpecifiedBody() != null) {
 				conn.setDoOutput(true);
-				conn.setRequestProperty("Content-Type",
-						request.getSpecifiedContentType());
+				conn.setRequestProperty("Content-Type", request.getSpecifiedContentType());
 				OutputStream os = conn.getOutputStream();
 				try {
 					os.write(request.getSpecifiedBody());
@@ -80,10 +79,8 @@ public class HTTP {
 			} else if (request.getFormParams() != null
 					&& request.getFormParams().size() > 0) {
 				conn.setDoOutput(true);
-				conn.setRequestProperty("Content-Type",
-						"application/x-www-form-urlencoded");
-				byte[] body = request.getRequestBody()
-						.asApplicationXWwwFormUrlencoded();
+				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+				byte[] body = request.getRequestBody().asApplicationXWwwFormUrlencoded();
 				OutputStream os = conn.getOutputStream();
 				try {
 					os.write(body);
@@ -92,12 +89,10 @@ public class HTTP {
 				}
 			} else if (request.getMultipartFormData() != null
 					&& request.getMultipartFormData().size() > 0) {
-				String boundary = "----HTTPilotBoundary_"
-						+ System.currentTimeMillis();
-				conn.setRequestProperty("Content-Type",
-						"multipart/form-data; boundary=" + boundary);
-				byte[] body = request.getRequestBody().asMultipart(boundary);
 				conn.setDoOutput(true);
+				String boundary = "----HTTPilotBoundary_" + System.currentTimeMillis();
+				conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+				byte[] body = request.getRequestBody().asMultipart(boundary);
 				OutputStream os = conn.getOutputStream();
 				try {
 					os.write(body);
