@@ -1,11 +1,9 @@
 package server.handler;
 
 import httpilot.Method;
-import org.eclipse.jetty.server.Request;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
+import org.eclipse.jetty.server.Request;
 
 public class OptionsMethodHandler extends MethodHandler {
 
@@ -14,10 +12,9 @@ public class OptionsMethodHandler extends MethodHandler {
 		return Method.OPTIONS;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void _handle(Boolean isAllowed, Method method,
-	                    Request baseRequest, HttpServletRequest request,
-	                    HttpServletResponse response) throws Exception {
+	public void _handle(Boolean isAllowed, Method method, Request baseRequest,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		if (isAllowed) {
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setHeader("Allow", "GET, HEAD, OPTIONS, TRACE");

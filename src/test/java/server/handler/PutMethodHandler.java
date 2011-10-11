@@ -1,14 +1,12 @@
 package server.handler;
 
 import httpilot.Method;
-import org.eclipse.jetty.server.Request;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.server.Request;
 
 public class PutMethodHandler extends MethodHandler {
 
@@ -17,9 +15,8 @@ public class PutMethodHandler extends MethodHandler {
 		return Method.PUT;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void _handle(Boolean isAllowed, Method method, Request baseRequest,
-	                    HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		if (isAllowed) {
 			InputStream is = request.getInputStream();

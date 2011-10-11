@@ -22,7 +22,6 @@ public abstract class MethodHandler extends AbstractHandler {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void _handle(Boolean isAllowed, Method method,
 	                    Request baseRequest, HttpServletRequest request,
 	                    HttpServletResponse response) throws Exception {

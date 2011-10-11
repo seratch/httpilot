@@ -1,16 +1,8 @@
 package httpilot;
 
-import httpilot.Request.*;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
 
 public class RequestTest {
 
