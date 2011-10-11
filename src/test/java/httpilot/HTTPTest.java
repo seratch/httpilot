@@ -5,7 +5,13 @@ import httpilot.FormData.TextInput;
 import org.junit.Test;
 import server.HttpServer;
 import server.PostFormdataServer;
-import server.handler.*;
+import server.handler.DeleteMethodHandler;
+import server.handler.GetMethodHandler;
+import server.handler.HeadMethodHandler;
+import server.handler.OptionsMethodHandler;
+import server.handler.PostMethodHandler;
+import server.handler.PutMethodHandler;
+import server.handler.TraceMethodHandler;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class HTTPTest {
 

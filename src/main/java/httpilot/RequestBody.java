@@ -52,10 +52,10 @@ public class RequestBody {
 		Map<String, Object> formParams = request.getFormParams();
 		StringBuilder sb = new StringBuilder();
 		for (String key : request.getFormParams().keySet()) {
-			sb.append(urlEncode(key));
-			sb.append("=");
 			Object value = formParams.get(key);
-			if (value != null ) {
+			if (value != null) {
+				sb.append(urlEncode(key));
+				sb.append("=");
 				sb.append(urlEncode(formParams.get(key).toString()));
 			}
 			sb.append("&");
