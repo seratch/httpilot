@@ -54,9 +54,9 @@ public class RequestBody {
 		for (String key : request.getFormParams().keySet()) {
 			Object value = formParams.get(key);
 			if (value != null) {
-				sb.append(urlEncode(key));
+				sb.append(HTTP.urlEncode(key));
 				sb.append("=");
-				sb.append(urlEncode(formParams.get(key).toString()));
+				sb.append(HTTP.urlEncode(formParams.get(key).toString()));
 			}
 			sb.append("&");
 		}
@@ -104,14 +104,6 @@ public class RequestBody {
 		} finally {
 			IO.close(os);
 		}
-	}
-
-	private static String urlEncode(String rawValue) {
-		try {
-			return URLEncoder.encode(rawValue, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-		}
-		return rawValue;
 	}
 
 }

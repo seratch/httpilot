@@ -44,22 +44,30 @@ public class Request {
 
 	public HttpURLConnection toHttpURLConnection(Method method)
 			throws IOException {
+
+		// set additional query parameters
 		if (method.equals(Method.GET) && getQueryParams() != null
 				&& getQueryParams().size() > 0) {
 			for (String key : getQueryParams().keySet()) {
-				String param = key + "=" + getQueryParams().get(key);
-				url += (url.contains("?") ? "&" : "?") + param;
+				Object value = getQueryParams().get(key);
+				if (value != null) {
+					String newParam = HTTP.urlEncode(key) + "=" + HTTP.urlEncode(value.toString());
+					url += (url.contains("?") ? "&" : "?") + newParam;
+				}
 			}
 		}
-		URL urlObj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
+
+		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+		conn.setRequestMethod(method.toString());
 		conn.setConnectTimeout(connectTimeoutMillis);
 		conn.setReadTimeout(readTimeoutMillis);
-		conn.setRequestMethod(method.toString());
+
+		// HTTP header injection is checked by HttpURLConnection
 		conn.setRequestProperty("User-Agent", userAgent);
 		for (String headerKey : headers.keySet()) {
 			conn.setRequestProperty(headerKey, headers.get(headerKey));
 		}
+
 		return conn;
 	}
 

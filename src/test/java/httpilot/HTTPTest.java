@@ -77,12 +77,16 @@ public class HTTPTest {
 
 			Request request = new Request("http://localhost:8888/?foo=var");
 			Map<String, Object> queryParams = new HashMap<String, Object>();
-			queryParams.put("toReturn", "Andy");
+			queryParams.put("toReturn", "日本語");
 			request.setQueryParams(queryParams);
+
+			String url = request.toHttpURLConnection(Method.GET).getURL().toString();
+			assertThat(url, is(equalTo("http://localhost:8888/?foo=var&toReturn=%E6%97%A5%E6%9C%AC%E8%AA%9E")));
+
 			Response response = HTTP.get(request);
 			assertThat(response.getStatus(), is(200));
 			assertThat(response.getHeaders().size(), is(greaterThan(0)));
-			assertThat(response.getTextBody(), is("Andy"));
+			assertThat(response.getTextBody(), is("日本語"));
 		} finally {
 			server.stop();
 			Thread.sleep(100L);
@@ -426,7 +430,7 @@ public class HTTPTest {
 		}
 	}
 
-	@Test(expected = MalformedURLException.class)
+	@Test
 	public void get_A$Request_HeaderInjectionByQueryString() throws Exception {
 		final HttpServer server = new HttpServer(new AbstractHandler() {
 			@Override
@@ -453,11 +457,8 @@ public class HTTPTest {
 			Map<String, Object> query = new HashMap<String, Object>();
 			query.put("k", "v\nH2: evil");
 			request.setQueryParams(query);
-			HTTP.get(request);
-			// java.net.MalformedURLException: Illegal character in URL
-			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
-			//	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)
+			Response response = HTTP.get(request);
+			assertThat(response.getStatus(), is(200));
 		} finally {
 			server.stop();
 			Thread.sleep(100L);
