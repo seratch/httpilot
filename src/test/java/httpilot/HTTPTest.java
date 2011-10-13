@@ -414,7 +414,7 @@ public class HTTPTest {
 
 			Request request = new Request("http://localhost:8888/");
 			request.setHeader("H1", "dummy\nH2: evil");
-			Response response = HTTP.get(request);
+			HTTP.get(request);
 			// java.lang.IllegalArgumentException: Illegal character(s) in message header value: dummy
 			// H2: evil
 			//	at sun.net.www.protocol.http.HttpURLConnection.checkMessageHeader(HttpURLConnection.java:428)
@@ -453,7 +453,7 @@ public class HTTPTest {
 			Map<String, Object> query = new HashMap<String, Object>();
 			query.put("k", "v\nH2: evil");
 			request.setQueryParams(query);
-			Response response = HTTP.get(request);
+			HTTP.get(request);
 			// java.net.MalformedURLException: Illegal character in URL
 			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
