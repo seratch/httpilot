@@ -2,6 +2,7 @@ package httpilot;
 
 import httpilot.FormData.FileInput;
 import httpilot.FormData.TextInput;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.junit.Test;
 import server.HttpServer;
 import server.PostFormdataServer;
@@ -13,6 +14,8 @@ import server.handler.PostMethodHandler;
 import server.handler.PutMethodHandler;
 import server.handler.TraceMethodHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -342,6 +345,85 @@ public class HTTPTest {
 		Request request = new Request("http://seratch.net/");
 		Response response = HTTP.request(method, request);
 		assertThat(response.getStatus(), is(200));
+	}
+
+	@Test
+	public void request_A$HttpMethod$Request_HeaderInjection() throws Exception {
+		Method method = Method.GET;
+		Request request = new Request("http://seratch.net/");
+		request.setHeader("H1", "dummy\n H2: evil");
+		Response response = HTTP.request(method, request);
+		assertThat(response.getStatus(), is(200));
+	}
+
+	@Test
+	public void get_A$Request_HeaderInjection1() throws Exception {
+		final HttpServer server = new HttpServer(new AbstractHandler() {
+			@Override
+			public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
+			                   HttpServletRequest request, HttpServletResponse response) {
+				try {
+					if (request.getHeader("H2") != null) {
+						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					} else {
+						response.setStatus(HttpServletResponse.SC_OK);
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				baseRequest.setHandled(true);
+			}
+		});
+		try {
+			Runnable runnable = getRunnable(server);
+			new Thread(runnable).start();
+			Thread.sleep(100L);
+
+			Request request = new Request("http://localhost:8888/");
+			request.setHeader("H1", "dummy\n H2: evil");
+			Response response = HTTP.get(request);
+			assertThat(response.getStatus(), is(200));
+		} finally {
+			server.stop();
+			Thread.sleep(100L);
+		}
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void get_A$Request_HeaderInjection2() throws Exception {
+		final HttpServer server = new HttpServer(new AbstractHandler() {
+			@Override
+			public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
+			                   HttpServletRequest request, HttpServletResponse response) {
+				try {
+					if (request.getHeader("H2") != null) {
+						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					} else {
+						response.setStatus(HttpServletResponse.SC_OK);
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				baseRequest.setHandled(true);
+			}
+		});
+		try {
+			Runnable runnable = getRunnable(server);
+			new Thread(runnable).start();
+			Thread.sleep(100L);
+
+			Request request = new Request("http://localhost:8888/");
+			request.setHeader("H1", "dummy\nH2: evil");
+			Response response = HTTP.get(request);
+			// java.lang.IllegalArgumentException: Illegal character(s) in message header value: dummy
+			// H2: evil
+			//	at sun.net.www.protocol.http.HttpURLConnection.checkMessageHeader(HttpURLConnection.java:428)
+			//	at sun.net.www.protocol.http.HttpURLConnection.isExternalMessageHeaderAllowed(HttpURLConnection.java:394)
+			//	at sun.net.www.protocol.http.HttpURLConnection.setRequestProperty(HttpURLConnection.java:2378)
+		} finally {
+			server.stop();
+			Thread.sleep(100L);
+		}
 	}
 
 }
