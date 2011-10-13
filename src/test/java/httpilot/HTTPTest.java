@@ -426,4 +426,42 @@ public class HTTPTest {
 		}
 	}
 
+	@Test(expected = MalformedURLException.class)
+	public void get_A$Request_HeaderInjectionByQueryString() throws Exception {
+		final HttpServer server = new HttpServer(new AbstractHandler() {
+			@Override
+			public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
+			                   HttpServletRequest request, HttpServletResponse response) {
+				try {
+					if (request.getHeader("H2") != null) {
+						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					} else {
+						response.setStatus(HttpServletResponse.SC_OK);
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				baseRequest.setHandled(true);
+			}
+		});
+		try {
+			Runnable runnable = getRunnable(server);
+			new Thread(runnable).start();
+			Thread.sleep(100L);
+
+			Request request = new Request("http://localhost:8888/");
+			Map<String, Object> query = new HashMap<String, Object>();
+			query.put("k", "v\nH2: evil");
+			request.setQueryParams(query);
+			Response response = HTTP.get(request);
+			// java.net.MalformedURLException: Illegal character in URL
+			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+			//	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
+			//	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)
+		} finally {
+			server.stop();
+			Thread.sleep(100L);
+		}
+	}
+
 }
