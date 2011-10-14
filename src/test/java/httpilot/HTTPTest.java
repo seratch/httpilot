@@ -59,7 +59,7 @@ public class HTTPTest {
 			Request request = new Request("http://localhost:8888/");
 			Response response = HTTP.get(request);
 			assertThat(response.getStatus(), is(200));
-			assertThat(response.getHeaders().size(), is(greaterThan(0)));
+			assertThat(response.getHeaderFields().size(), is(greaterThan(0)));
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {
 			server.stop();
@@ -85,7 +85,7 @@ public class HTTPTest {
 
 			Response response = HTTP.get(request);
 			assertThat(response.getStatus(), is(200));
-			assertThat(response.getHeaders().size(), is(greaterThan(0)));
+			assertThat(response.getHeaderFields().size(), is(greaterThan(0)));
 			assertThat(response.getTextBody(), is("日本語"));
 		} finally {
 			server.stop();
@@ -313,7 +313,7 @@ public class HTTPTest {
 			assertThat(getResponse.getTextBody(), is("だｍ"));
 			Response response = HTTP.options(request);
 			assertThat(response.getStatus(), is(200));
-			assertThat(response.getHeaders().get("Allow").toString(),
+			assertThat(response.getHeaderFields().get("Allow").toString(),
 					is("[GET, HEAD, OPTIONS, TRACE]"));
 			assertThat(response.getTextBody(), is("おｋ"));
 		} finally {

@@ -99,7 +99,7 @@ Request request = new Request("http://example.com/");
 request.setCharset("EUC-JP");
 ```
 
-It's also possible to overwrite other headers.
+It's also possible to overwrite other headerFields.
 
 ```java
 request.setHeader("Authorization", "OAuth oauth_consumer_key=...")

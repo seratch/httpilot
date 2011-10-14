@@ -22,6 +22,9 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class HTTP {
 
@@ -117,7 +120,13 @@ public class HTTP {
 		Response response = new Response();
 		response.setCharset(request.getCharset());
 		response.setStatus(conn.getResponseCode());
-		response.setHeaders(conn.getHeaderFields());
+		response.setHeaderFields(conn.getHeaderFields());
+		Map<String, String> headers = new HashMap<String, String>();
+		for (String headerName : conn.getHeaderFields().keySet()) {
+			headers.put(headerName, conn.getHeaderField(headerName));
+		}
+		response.setHeaders(headers);
+
 		if (is != null) {
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			try {
@@ -131,11 +140,20 @@ public class HTTP {
 			}
 		}
 
-		if (needToThrowException) {
-			throw new HTTPIOException(exceptionMessage, response);
-		} else {
-			return response;
+		try
+
+		{
+			if (needToThrowException) {
+				throw new HTTPIOException(exceptionMessage, response);
+			} else {
+				return response;
+			}
+		} finally
+
+		{
+			conn.disconnect();
 		}
+
 	}
 
 	static String urlEncode(String rawValue) {

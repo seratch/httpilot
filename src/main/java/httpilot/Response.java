@@ -24,7 +24,9 @@ public class Response {
 
 	private int status = -1;
 
-	private Map<String, List<String>> headers = new HashMap<String, List<String>>();
+	private Map<String, String> headers = new HashMap<String, String>();
+
+	private Map<String, List<String>> headerFields = new HashMap<String, List<String>>();
 
 	private String charset;
 
@@ -38,12 +40,20 @@ public class Response {
 		this.status = status;
 	}
 
-	public Map<String, List<String>> getHeaders() {
+	public Map<String, String> getHeaders() {
 		return headers;
 	}
 
-	public void setHeaders(Map<String, List<String>> headers) {
+	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
+	}
+
+	public Map<String, List<String>> getHeaderFields() {
+		return headerFields;
+	}
+
+	public void setHeaderFields(Map<String, List<String>> headerFields) {
+		this.headerFields = headerFields;
 	}
 
 	public void setCharset(String charset) {
