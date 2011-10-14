@@ -10,17 +10,13 @@
     <id>seratch.github.com releases</id>
     <url>http://seratch.github.com/mvn-repo/releases</url>
   </repository>
-  <repository>
-    <id>seratch.github.com snapshots</id>
-    <url>http://seratch.github.com/mvn-repo/snapshots</url>
-  </repository>
 </repositories>
 
 <dependencies>
   <dependency>
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
   </dependency>
 </dependencies>
 ```
@@ -28,8 +24,8 @@
 ### Grape
 
 ```groovy
-@GrabResolver(name='seratch_snapshots', root='http://seratch.github.com/mvn-repo/snapshots', m2Compatible='true')
-@Grab('com.github.seratch:httpilot:1.0-SNAPSHOT')
+@GrabResolver(name='seratch_github_com_releases', root='http://seratch.github.com/mvn-repo/releases', m2Compatible='true')
+@Grab('com.github.seratch:httpilot:0.1')
 
 import httpilot.*;
 response = HTTP.get(new Request("http://seratch.github.com"));
@@ -48,7 +44,8 @@ Request request = new Request("http://example.com/");
 Response response = HTTP.get(request);
 
 response.getStatus()   // -> int : 200
-response.getHeaders()  // -> Map<String, List<String>> : {null=[HTTP/1.1 200 OK], ETag=["33414 ...
+response.getHeaders()  // -> Map<String, String> : {null=HTTP/1.1 200 OK, ETag="33414 ...
+response.getHeaderFields()  // -> Map<String, List<String>> : {null=[HTTP/1.1 200 OK], ETag=["33414 ...
 response.getBody()     // -> byte[] : ....
 response.getTextBody() // -> String : "<htmll><head>..."
 ```
