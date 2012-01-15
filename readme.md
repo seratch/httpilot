@@ -83,7 +83,7 @@ Connection: keep-alive
 
 ```
 
-The default value for "Accept-Charset" is "UTF-8". Off course, it's possible to specify other encoding values.
+The default value for "Accept-Charset" is "UTF-8". Needless to say, it's possible to specify other encoding values.
 
 ```java
 Request request = new Request("http://example.com/", "EUC-JP");
