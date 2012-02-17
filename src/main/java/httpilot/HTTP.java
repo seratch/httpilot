@@ -24,144 +24,140 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class HTTP {
 
-	private HTTP() {
-	}
+    private HTTP() {
+    }
 
-	public static Response get(Request request) throws IOException {
-		return request(Method.GET, request);
-	}
+    public static Response get(Request request) throws IOException {
+        return request(Method.GET, request);
+    }
 
-	public static Response post(Request request) throws IOException {
-		return request(Method.POST, request);
-	}
+    public static Response post(Request request) throws IOException {
+        return request(Method.POST, request);
+    }
 
-	public static Response put(Request request) throws IOException {
-		return request(Method.PUT, request);
-	}
+    public static Response put(Request request) throws IOException {
+        return request(Method.PUT, request);
+    }
 
-	public static Response delete(Request request) throws IOException {
-		return request(Method.DELETE, request);
-	}
+    public static Response delete(Request request) throws IOException {
+        return request(Method.DELETE, request);
+    }
 
-	public static Response head(Request request) throws IOException {
-		return request(Method.HEAD, request);
-	}
+    public static Response head(Request request) throws IOException {
+        return request(Method.HEAD, request);
+    }
 
-	public static Response options(Request request) throws IOException {
-		return request(Method.OPTIONS, request);
-	}
+    public static Response options(Request request) throws IOException {
+        return request(Method.OPTIONS, request);
+    }
 
-	public static Response trace(Request request) throws IOException {
-		return request(Method.TRACE, request);
-	}
+    public static Response trace(Request request) throws IOException {
+        return request(Method.TRACE, request);
+    }
 
-	public static Response request(Method method, Request request)
-			throws IOException {
+    public static Response request(Method method, Request request) throws IOException {
 
-		HttpURLConnection conn = request.toHttpURLConnection(method);
+        HttpURLConnection conn = request.toHttpURLConnection(method);
 
-		if (request.getCharset() != null) {
-			conn.setRequestProperty("Accept-Charset", request.getCharset());
-		}
+        if (request.getCharset() != null) {
+            conn.setRequestProperty("Accept-Charset", request.getCharset());
+        }
 
-		boolean needToThrowException = false;
-		String exceptionMessage = "";
-		InputStream is = null;
-		try {
-			if (request.getSpecifiedBody() != null) {
-				conn.setDoOutput(true);
-				conn.setRequestProperty("Content-Type", request.getSpecifiedContentType());
-				OutputStream os = conn.getOutputStream();
-				try {
-					os.write(request.getSpecifiedBody());
-				} finally {
-					IO.close(os);
-				}
-			} else if (request.getFormParams() != null
-					&& request.getFormParams().size() > 0) {
-				conn.setDoOutput(true);
-				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-				byte[] body = request.getRequestBody().asApplicationXWwwFormUrlencoded();
-				OutputStream os = conn.getOutputStream();
-				try {
-					os.write(body);
-				} finally {
-					IO.close(os);
-				}
-			} else if (request.getMultipartFormData() != null
-					&& request.getMultipartFormData().size() > 0) {
-				conn.setDoOutput(true);
-				String boundary = "----HTTPilotBoundary_" + System.currentTimeMillis();
-				conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-				byte[] body = request.getRequestBody().asMultipart(boundary);
-				OutputStream os = conn.getOutputStream();
-				try {
-					os.write(body);
-				} finally {
-					IO.close(os);
-				}
-			}
+        boolean needToThrowException = false;
+        String exceptionMessage = "";
+        InputStream is = null;
+        try {
+            if (request.getSpecifiedBody() != null) {
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", request.getSpecifiedContentType());
+                OutputStream os = conn.getOutputStream();
+                try {
+                    os.write(request.getSpecifiedBody());
+                } finally {
+                    IO.close(os);
+                }
+            } else if (request.getFormParams() != null && request.getFormParams().size() > 0) {
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                byte[] body = request.getRequestBody().asApplicationXWwwFormUrlencoded();
+                OutputStream os = conn.getOutputStream();
+                try {
+                    os.write(body);
+                } finally {
+                    IO.close(os);
+                }
+            } else if (request.getMultipartFormData() != null && request.getMultipartFormData().size() > 0) {
+                conn.setDoOutput(true);
+                String boundary = "----HTTPilotBoundary_" + System.currentTimeMillis();
+                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+                byte[] body = request.getRequestBody().asMultipart(boundary);
+                OutputStream os = conn.getOutputStream();
+                try {
+                    os.write(body);
+                } finally {
+                    IO.close(os);
+                }
+            }
 
-			conn.connect();
-			is = conn.getInputStream();
+            conn.connect();
+            is = conn.getInputStream();
 
-		} catch (IOException ioe) {
-			if (request.isEnableThrowingIOException()) {
-				needToThrowException = true;
-				exceptionMessage = ioe.getMessage();
-			}
-			is = conn.getErrorStream();
-		}
+        } catch (IOException ioe) {
+            if (request.isEnableThrowingIOException()) {
+                needToThrowException = true;
+                exceptionMessage = ioe.getMessage();
+            }
+            is = conn.getErrorStream();
+        }
 
-		Response response = new Response();
-		response.setCharset(request.getCharset());
-		response.setStatus(conn.getResponseCode());
-		response.setHeaderFields(conn.getHeaderFields());
-		Map<String, String> headers = new HashMap<String, String>();
-		for (String headerName : conn.getHeaderFields().keySet()) {
-			headers.put(headerName, conn.getHeaderField(headerName));
-		}
-		response.setHeaders(headers);
+        Response response = new Response();
+        response.setCharset(request.getCharset());
+        response.setStatus(conn.getResponseCode());
+        response.setHeaderFields(conn.getHeaderFields());
+        Map<String, String> headers = new HashMap<String, String>();
+        for (String headerName : conn.getHeaderFields().keySet()) {
+            headers.put(headerName, conn.getHeaderField(headerName));
+        }
+        response.setHeaders(headers);
 
-		if (is != null) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			try {
-				int c;
-				while ((c = is.read()) != -1) {
-					os.write(c);
-				}
-				response.setBody(os.toByteArray());
-			} finally {
-				IO.close(os);
-			}
-		}
+        if (is != null) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            try {
+                int c;
+                while ((c = is.read()) != -1) {
+                    os.write(c);
+                }
+                response.setBody(os.toByteArray());
+            } finally {
+                IO.close(os);
+            }
+        }
 
-		try
+        try
 
-		{
-			if (needToThrowException) {
-				throw new HTTPIOException(exceptionMessage, response);
-			} else {
-				return response;
-			}
-		} finally
+        {
+            if (needToThrowException) {
+                throw new HTTPIOException(exceptionMessage, response);
+            } else {
+                return response;
+            }
+        } finally
 
-		{
-			conn.disconnect();
-		}
+        {
+            conn.disconnect();
+        }
 
-	}
+    }
 
-	static String urlEncode(String rawValue) {
-		try {
-			return URLEncoder.encode(rawValue, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-		}
-		return rawValue;
-	}
+    static String urlEncode(String rawValue) {
+        try {
+            return URLEncoder.encode(rawValue, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+        }
+        return rawValue;
+    }
 
 }

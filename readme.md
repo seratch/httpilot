@@ -5,18 +5,11 @@
 ### Maven
 
 ```xml
-<repositories>
-  <repository>
-    <id>seratch.github.com releases</id>
-    <url>http://seratch.github.com/mvn-repo/releases</url>
-  </repository>
-</repositories>
-
 <dependencies>
   <dependency>
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
   </dependency>
 </dependencies>
 ```
@@ -24,8 +17,7 @@
 ### Grape
 
 ```groovy
-@GrabResolver(name='seratch_github_com_releases', root='http://seratch.github.com/mvn-repo/releases', m2Compatible='true')
-@Grab('com.github.seratch:httpilot:0.1')
+@Grab('com.github.seratch:httpilot:0.2')
 
 import httpilot.*;
 response = HTTP.get(new Request("http://seratch.github.com"));

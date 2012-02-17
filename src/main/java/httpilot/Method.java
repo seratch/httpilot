@@ -17,28 +17,28 @@ package httpilot;
 
 public final class Method {
 
-	private String methodName;
+    private String methodName;
 
-	public Method(String methodName) {
-		this.methodName = methodName;
-	}
+    public Method(String methodName) {
+        this.methodName = methodName;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof Method && toString().equals(obj.toString());
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Method && toString().equals(obj.toString());
+    }
 
-	@Override
-	public String toString() {
-		return this.methodName;
-	}
+    @Override
+    public String toString() {
+        return this.methodName;
+    }
 
-	public static Method GET = new Method("GET");
-	public static Method HEAD = new Method("HEAD");
-	public static Method POST = new Method("POST");
-	public static Method PUT = new Method("PUT");
-	public static Method DELETE = new Method("DELETE");
-	public static Method OPTIONS = new Method("OPTIONS");
-	public static Method TRACE = new Method("TRACE");
+    public static Method GET = new Method("GET");
+    public static Method HEAD = new Method("HEAD");
+    public static Method POST = new Method("POST");
+    public static Method PUT = new Method("PUT");
+    public static Method DELETE = new Method("DELETE");
+    public static Method OPTIONS = new Method("OPTIONS");
+    public static Method TRACE = new Method("TRACE");
 
 }

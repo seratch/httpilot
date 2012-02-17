@@ -4,9 +4,9 @@ import httpilot.Method;
 
 public class DeleteMethodHandler extends MethodHandler {
 
-	@Override
-	public Method getMethod() {
-		return Method.DELETE;
-	}
+    @Override
+    public Method getMethod() {
+        return Method.DELETE;
+    }
 
 }

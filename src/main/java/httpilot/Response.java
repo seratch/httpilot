@@ -22,66 +22,66 @@ import java.util.Map;
 
 public class Response {
 
-	private int status = -1;
+    private int status = -1;
 
-	private Map<String, String> headers = new HashMap<String, String>();
+    private Map<String, String> headers = new HashMap<String, String>();
 
-	private Map<String, List<String>> headerFields = new HashMap<String, List<String>>();
+    private Map<String, List<String>> headerFields = new HashMap<String, List<String>>();
 
-	private String charset;
+    private String charset;
 
-	private byte[] body;
+    private byte[] body;
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
 
-	public void setHeaders(Map<String, String> headers) {
-		this.headers = headers;
-	}
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
 
-	public Map<String, List<String>> getHeaderFields() {
-		return headerFields;
-	}
+    public Map<String, List<String>> getHeaderFields() {
+        return headerFields;
+    }
 
-	public void setHeaderFields(Map<String, List<String>> headerFields) {
-		this.headerFields = headerFields;
-	}
+    public void setHeaderFields(Map<String, List<String>> headerFields) {
+        this.headerFields = headerFields;
+    }
 
-	public void setCharset(String charset) {
-		this.charset = charset;
-	}
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
 
-	public String getCharset() {
-		return charset;
-	}
+    public String getCharset() {
+        return charset;
+    }
 
-	public byte[] getBody() {
-		return body;
-	}
+    public byte[] getBody() {
+        return body;
+    }
 
-	public void setBody(byte[] body) {
-		this.body = body;
-	}
+    public void setBody(byte[] body) {
+        this.body = body;
+    }
 
-	public String getTextBody() throws UnsupportedEncodingException {
-		if (body != null) {
-			if (charset != null) {
-				return new String(body, charset);
-			} else {
-				return new String(body);
-			}
-		} else {
-			return null;
-		}
-	}
+    public String getTextBody() throws UnsupportedEncodingException {
+        if (body != null) {
+            if (charset != null) {
+                return new String(body, charset);
+            } else {
+                return new String(body);
+            }
+        } else {
+            return null;
+        }
+    }
 
 }

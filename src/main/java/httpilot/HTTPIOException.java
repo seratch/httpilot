@@ -19,37 +19,37 @@ import java.io.IOException;
 
 public class HTTPIOException extends IOException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String message;
+    private String message;
 
-	private Response response;
+    private Response response;
 
-	public HTTPIOException(String message, Response response) {
-		setMessage(message);
-		setResponse(response);
-	}
+    public HTTPIOException(String message, Response response) {
+        setMessage(message);
+        setResponse(response);
+    }
 
-	@Override
-	public String getMessage() {
-		return this.message;
-	}
+    @Override
+    public String getMessage() {
+        return this.message;
+    }
 
-	@Override
-	public String getLocalizedMessage() {
-		return this.message;
-	}
+    @Override
+    public String getLocalizedMessage() {
+        return this.message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public Response getResponse() {
-		return response;
-	}
+    public Response getResponse() {
+        return response;
+    }
 
-	public void setResponse(Response response) {
-		this.response = response;
-	}
+    public void setResponse(Response response) {
+        this.response = response;
+    }
 
 }

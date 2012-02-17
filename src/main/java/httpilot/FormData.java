@@ -24,106 +24,104 @@ import java.io.UnsupportedEncodingException;
 
 public class FormData {
 
-	public FormData(String name) {
-		setName(name);
-	}
+    public FormData(String name) {
+        setName(name);
+    }
 
-	public FormData(String name, byte[] body) {
-		setName(name);
-		setBody(body);
-	}
+    public FormData(String name, byte[] body) {
+        setName(name);
+        setBody(body);
+    }
 
-	public static class TextInput {
+    public static class TextInput {
 
-		public TextInput(String textBody, String charset) {
-			this.textBody = textBody;
-			this.charset = charset;
-		}
+        public TextInput(String textBody, String charset) {
+            this.textBody = textBody;
+            this.charset = charset;
+        }
 
-		private String textBody;
-		private String charset;
-	}
+        private String textBody;
+        private String charset;
+    }
 
-	public FormData(String name, TextInput input)
-			throws UnsupportedEncodingException {
-		setName(name);
-		setTextBody(input.textBody, input.charset);
-	}
+    public FormData(String name, TextInput input) throws UnsupportedEncodingException {
+        setName(name);
+        setTextBody(input.textBody, input.charset);
+    }
 
-	public static class FileInput {
+    public static class FileInput {
 
-		public FileInput(File file, String contentType) {
-			this.file = file;
-			this.contentType = contentType;
-		}
+        public FileInput(File file, String contentType) {
+            this.file = file;
+            this.contentType = contentType;
+        }
 
-		private File file;
-		private String contentType;
-	}
+        private File file;
+        private String contentType;
+    }
 
-	public FormData(String name, FileInput input) {
-		setName(name);
-		setFile(input.file);
-		setContentType(input.contentType);
-	}
+    public FormData(String name, FileInput input) {
+        setName(name);
+        setFile(input.file);
+        setContentType(input.contentType);
+    }
 
-	private String name;
+    private String name;
 
-	private String contentType;
+    private String contentType;
 
-	private File file;
+    private File file;
 
-	private byte[] body;
+    private byte[] body;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getFilename() {
-		if (this.file != null) {
-			return file.getName();
-		} else {
-			return null;
-		}
-	}
+    public String getFilename() {
+        if (this.file != null) {
+            return file.getName();
+        } else {
+            return null;
+        }
+    }
 
-	public String getContentType() {
-		return contentType;
-	}
+    public String getContentType() {
+        return contentType;
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
-	public byte[] getBody() throws IOException {
-		if (body == null) {
-			InputStream is = new FileInputStream(file);
-			ByteArrayOutputStream b = new ByteArrayOutputStream();
-			int c;
-			while ((c = is.read()) != -1) {
-				b.write(c);
-			}
-			return b.toByteArray();
-		} else {
-			return body;
-		}
-	}
+    public byte[] getBody() throws IOException {
+        if (body == null) {
+            InputStream is = new FileInputStream(file);
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            int c;
+            while ((c = is.read()) != -1) {
+                b.write(c);
+            }
+            return b.toByteArray();
+        } else {
+            return body;
+        }
+    }
 
-	public void setBody(byte[] body) {
-		this.body = body;
-	}
+    public void setBody(byte[] body) {
+        this.body = body;
+    }
 
-	public void setFile(File file) {
-		this.file = file;
-	}
+    public void setFile(File file) {
+        this.file = file;
+    }
 
-	public void setTextBody(String textBody, String charset)
-			throws UnsupportedEncodingException {
-		this.body = textBody.getBytes(charset);
-	}
+    public void setTextBody(String textBody, String charset) throws UnsupportedEncodingException {
+        this.body = textBody.getBytes(charset);
+    }
 
 }
