@@ -136,17 +136,13 @@ public class HTTP {
             }
         }
 
-        try
-
-        {
+        try {
             if (needToThrowException) {
                 throw new HTTPIOException(exceptionMessage, response);
             } else {
                 return response;
             }
-        } finally
-
-        {
+        } finally {
             conn.disconnect();
         }
 
