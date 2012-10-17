@@ -19,11 +19,11 @@ import scala.collection.JavaConverters._
 
 case class Response(underlying: httpilot.Response) {
 
-  def status() = underlying.getStatus
+  def status(): Int = underlying.getStatus
 
   def status(status: Int) = underlying.setStatus(status)
 
-  def headers() = underlying.getHeaders.asScala
+  def headers(): Map[String, String] = underlying.getHeaders.asScala.toMap
 
   def headers(headers: Map[String, String]) = underlying.setHeaders(headers.asJava)
 
@@ -38,18 +38,18 @@ case class Response(underlying: httpilot.Response) {
     underlying.setHeaderFields(toValueAsJava.asJava)
   }
 
-  def charset() = underlying.getCharset
+  def charset(): String = underlying.getCharset
 
   def charset(charset: String) = underlying.setCharset(charset)
 
-  def body() = underlying.getBody
+  def body(): Array[Byte] = underlying.getBody
 
   def body(body: Array[Byte]) = underlying.setBody(body)
 
-  def asBytes() = body()
+  def asBytes(): Array[Byte] = body()
 
-  def textBody() = underlying.getTextBody
+  def textBody(): String = underlying.getTextBody
 
-  def asString() = textBody()
+  def asString(): String = textBody()
 
 }
