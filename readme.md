@@ -1,30 +1,75 @@
-# HTTPilot: A Pretty Simple HTTP/1.1 Client for Java
+# HTTPilot: A Pretty Simple HTTP/1.1 Client for Java/Scala
+
+HTTPilot is a preety simple HTTP/1.1 client library which is written in Java.
 
 ## Getting Started
 
-### Maven
+### Scala via xsbt
+
+```scala
+libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.0"
+```
+
+### Java via Maven
 
 ```xml
 <dependencies>
   <dependency>
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.2</version>
+    <version>0.3.0</version>
   </dependency>
 </dependencies>
 ```
 
-### Grape
+### Groovy via Grape
 
 ```groovy
-@Grab('com.github.seratch:httpilot:0.2')
+@Grab('com.github.seratch:httpilot:0.3.0')
 
 import httpilot.*;
 response = HTTP.get(new Request("http://seratch.github.com"));
 println(response.getTextBody());
 ```
 
+
 ## Usage
+
+### Scala Usage
+
+GET:
+
+```scala
+import httpilot.scala._
+val response = HTTP.get("http://example.com")
+
+scala> val status = response.status
+status: Int = 200
+
+scala> val headers = response.headers
+headers: Map[String,String] = Map(null -> HTTP/1.1 200 OK, ETag -> "2800e-1b46-4c7d1dcaf9817", Date -> Wed, 17 Oct 2012 15:03:39 GMT, Content-Length -> 6982, Last-Modified -> Wed, 22 Aug 2012 02:54:31 GMT, Content-Type -> text/html; charset=UTF-8, Connection -> close, Accept-Ranges -> bytes, Server -> Apache/2.2.22 (Amazon))
+
+scala> val html = response.asString
+html: java.lang.String = "<!DOCTYPE html PUBLIC "-//W3C//DTD ...
+
+scala> val bin = response.asBytes
+bin: Array[Byte] = Array(60, 33, 68, 79, 67, ...
+```
+
+POST/PUT:
+
+```scala
+val response = HTTP.post("http://example.com/register", "aa=bb")
+
+val response = HTTP.post("http://example.com/register", Map("aaa" -> "bb"))
+```
+
+DELETE/OPTIONS/HEAD/TRACE:
+
+Same as Java/Groovy Usage.
+
+
+## Java/Groovy Usage
 
 ### GET
 
@@ -42,18 +87,6 @@ response.getBody()     // -> byte[] : ....
 response.getTextBody() // -> String : "<htmll><head>..."
 ```
 
-The above code will send the following HTTP request.
-
-```
-GET / HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-
-```
-
 It's also possible to append the query string with a Map object.
 
 ```java
@@ -62,18 +95,6 @@ Map<String, Object> queryParams = new HashMap<String, Object>();
 queryParams.put("age", 20);
 request.setQueryParams(queryParams);
 ````
-
-The above code will send the following HTTP request.
-
-```
-GET /?name=Andy&age=20 HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-
-```
 
 The default value for "Accept-Charset" is "UTF-8". Needless to say, it's possible to specify other encoding values.
 
@@ -108,21 +129,6 @@ request.setFormParams(formParams);
 Response response = HTTP.post(request);
 ```
 
-The above code will send the following HTTP request.
-
-```
-POST /register HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Content-Type: application/x-www-form-urlencoded
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-Content-Length: 16
-
-name=Andy&age=20
-```
-
 "multipart/form-data" is also available.
 
 ```java
@@ -134,30 +140,6 @@ request.setMultipartFormData(data);
 Response response = HTTP.post(request);
 ```
 
-The above code will send the following HTTP request.
-
-```
-POST / HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Content-Type: multipart/form-data; boundary=----HTTPilotBoundary_1318155510859
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-Content-Length: 12345
-
-------HTTPilotBoundary_1318155510859
-Content-Disposition: form-data; name="name"
-
-Andy
-------HTTPilotBoundary_1318155510859
-Content-Disposition: form-data; name="image"; filename="myface.jpg"
-content-type: image/jpeg
-
-....
-------HTTPilotBoundary_1318155510859--
-```
-
 The following code is an example of setting the message body of the request directly.
 
 ```java
@@ -165,21 +147,6 @@ Request request = new Request("http://example.com/register");
 String xml = "<?xml version="1.0" encoding="UTF-8" standalone="no" ?><user><id>1234</id><name>Andy</name></user>";
 request.setBody(xml.getBytes(), "text/xml");
 Response response = HTTP.post(request);
-```
-
-The above code will send the following HTTP request.
-
-```
-POST / HTTP/1.1
-User-Agent: HTTPilot (https://github.com/seratch/httpilot)
-Accept-Charset: UTF-8
-Content-Type: text/xml
-Host: example.com
-Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-Connection: keep-alive
-Content-Length: 98
-
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?><user><id>1234</id><name>Andy</name></user>
 ```
 
 ### PUT
