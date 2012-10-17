@@ -1,15 +1,13 @@
 package server.handler;
 
 import httpilot.Method;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.eclipse.jetty.server.Request;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class PutMethodHandler extends MethodHandler {
 
@@ -19,7 +17,7 @@ public class PutMethodHandler extends MethodHandler {
     }
 
     public void _handle(Boolean isAllowed, Method method, Request baseRequest, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+                        HttpServletResponse response) throws Exception {
         if (isAllowed) {
             InputStream is = request.getInputStream();
             BufferedReader r = new BufferedReader(new InputStreamReader(is));

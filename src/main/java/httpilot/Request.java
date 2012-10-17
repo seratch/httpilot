@@ -18,15 +18,13 @@ package httpilot;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Request {
 
-    private static final String DEFAULT_USER_AGENT = "HTTPilot (https://github.com/seratch/httpilot)";
+    public static final String DEFAULT_CHARSET = "UTF-8";
+
+    public static final String DEFAULT_USER_AGENT = "HTTPilot (https://github.com/seratch/httpilot)";
 
     public Request(String url) {
         setUrl(url);
@@ -77,11 +75,11 @@ public class Request {
 
     private int readTimeoutMillis = 10000;
 
-    private String referrer;
+    private String referer;
 
     private String userAgent = DEFAULT_USER_AGENT;
 
-    private String charset = "UTF-8";
+    private String charset = DEFAULT_CHARSET;
 
     private Map<String, String> headers = new HashMap<String, String>();
 
@@ -97,56 +95,63 @@ public class Request {
         return enableThrowingIOException;
     }
 
-    public void setEnableThrowingIOException(boolean enableThrowingIOException) {
+    public Request setEnableThrowingIOException(boolean enableThrowingIOException) {
         this.enableThrowingIOException = enableThrowingIOException;
+        return this;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public Request setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public int getConnectTimeoutMillis() {
         return connectTimeoutMillis;
     }
 
-    public void setConnectTimeoutMillis(int connectTimeoutMillis) {
+    public Request setConnectTimeoutMillis(int connectTimeoutMillis) {
         this.connectTimeoutMillis = connectTimeoutMillis;
+        return this;
     }
 
     public int getReadTimeoutMillis() {
         return readTimeoutMillis;
     }
 
-    public void setReadTimeoutMillis(int readTimeoutMillis) {
+    public Request setReadTimeoutMillis(int readTimeoutMillis) {
         this.readTimeoutMillis = readTimeoutMillis;
+        return this;
     }
 
-    public String getReferrer() {
-        return referrer;
+    public String getReferer() {
+        return referer;
     }
 
-    public void setReferrer(String referrer) {
-        this.referrer = referrer;
+    public Request setReferer(String referer) {
+        this.referer = referer;
+        return this;
     }
 
     public String getUserAgent() {
         return userAgent;
     }
 
-    public void setUserAgent(String userAgent) {
+    public Request setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+        return this;
     }
 
     public String getCharset() {
         return charset;
     }
 
-    public void setCharset(String charset) {
+    public Request setCharset(String charset) {
         this.charset = charset;
+        return this;
     }
 
     public Set<String> getHeaderNames() {
@@ -166,48 +171,53 @@ public class Request {
         }
     }
 
-    public void setHeader(String name, String value) {
+    public Request setHeader(String name, String value) {
         headers.put(name, value);
+        return this;
     }
 
     public Map<String, Object> getQueryParams() {
         return queryParams;
     }
 
-    public void setQueryParams(Map<String, Object> queryParams) {
+    public Request setQueryParams(Map<String, Object> queryParams) {
         this.queryParams = queryParams;
+        return this;
     }
 
     public RequestBody getRequestBody() {
         return requestBody;
     }
 
-    public void setBody(byte[] body, String contentType) {
+    public Request setBody(byte[] body, String contentType) {
         this.requestBody.setBody(body, contentType);
+        return this;
     }
 
     public byte[] getSpecifiedBody() {
-        return requestBody.getSpecifiedBody();
+        return requestBody.getBytes();
     }
 
     public String getSpecifiedContentType() {
-        return requestBody.getSpecifiedContentType();
+        return requestBody.getContentType();
     }
 
     public Map<String, Object> getFormParams() {
         return formParams;
     }
 
-    public void setFormParams(Map<String, Object> formParams) {
+    public Request setFormParams(Map<String, Object> formParams) {
         this.formParams = formParams;
+        return this;
     }
 
     public List<FormData> getMultipartFormData() {
         return multipartFormData;
     }
 
-    public void setMultipartFormData(List<FormData> multipartFormData) {
+    public Request setMultipartFormData(List<FormData> multipartFormData) {
         this.multipartFormData = multipartFormData;
+        return this;
     }
 
 }

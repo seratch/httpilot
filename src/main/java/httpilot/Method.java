@@ -15,7 +15,7 @@
  */
 package httpilot;
 
-public final class Method {
+public class Method {
 
     private String methodName;
 

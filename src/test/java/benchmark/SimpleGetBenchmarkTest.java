@@ -2,13 +2,11 @@ package benchmark;
 
 import httpilot.HTTP;
 import httpilot.Request;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Test;
-
 import server.HttpServer;
 import server.handler.GetMethodHandler;
 

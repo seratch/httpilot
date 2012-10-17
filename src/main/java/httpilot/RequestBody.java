@@ -25,25 +25,31 @@ public class RequestBody {
 
     private Request request;
 
-    private String specifiedContentType = null;
+    private String contentType = null;
 
-    private byte[] specifiedBody = null;
+    private byte[] bytes = null;
 
     public RequestBody(Request request) {
         this.request = request;
     }
 
-    public byte[] getSpecifiedBody() {
-        return specifiedBody;
+    public byte[] getBytes() {
+        return bytes;
     }
 
-    public String getSpecifiedContentType() {
-        return specifiedContentType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setBody(byte[] body, String contentType) {
-        this.specifiedBody = body;
-        this.specifiedContentType = contentType;
+    public RequestBody setBody(byte[] body, String contentType) {
+        this.bytes = body;
+        this.contentType = contentType;
+        return this;
+    }
+
+    public RequestBody setContentType(String contentType) {
+        this.contentType = contentType;
+        return this;
     }
 
     public byte[] asApplicationXWwwFormUrlencoded() {

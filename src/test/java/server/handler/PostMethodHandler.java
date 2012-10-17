@@ -1,11 +1,10 @@
 package server.handler;
 
 import httpilot.Method;
+import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.eclipse.jetty.server.Request;
 
 public class PostMethodHandler extends MethodHandler {
 

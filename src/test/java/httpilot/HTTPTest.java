@@ -1,10 +1,15 @@
 package httpilot;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import httpilot.FormData.FileInput;
 import httpilot.FormData.TextInput;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.junit.Test;
+import server.HttpServer;
+import server.PostFormdataServer;
+import server.handler.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -13,21 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.junit.Test;
-
-import server.HttpServer;
-import server.PostFormdataServer;
-import server.handler.DeleteMethodHandler;
-import server.handler.GetMethodHandler;
-import server.handler.HeadMethodHandler;
-import server.handler.OptionsMethodHandler;
-import server.handler.PostMethodHandler;
-import server.handler.PutMethodHandler;
-import server.handler.TraceMethodHandler;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 public class HTTPTest {
 
@@ -360,7 +352,7 @@ public class HTTPTest {
         final HttpServer server = new HttpServer(new AbstractHandler() {
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-                    HttpServletResponse response) {
+                               HttpServletResponse response) {
                 try {
                     if (request.getHeader("H2") != null) {
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -393,7 +385,7 @@ public class HTTPTest {
         final HttpServer server = new HttpServer(new AbstractHandler() {
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-                    HttpServletResponse response) {
+                               HttpServletResponse response) {
                 try {
                     if (request.getHeader("H2") != null) {
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -418,12 +410,9 @@ public class HTTPTest {
             // java.lang.IllegalArgumentException: Illegal character(s) in
             // message header value: dummy
             // H2: evil
-            // at
-            // sun.net.www.protocol.http.HttpURLConnection.checkMessageHeader(HttpURLConnection.java:428)
-            // at
-            // sun.net.www.protocol.http.HttpURLConnection.isExternalMessageHeaderAllowed(HttpURLConnection.java:394)
-            // at
-            // sun.net.www.protocol.http.HttpURLConnection.setRequestProperty(HttpURLConnection.java:2378)
+            // at sun.net.www.protocol.http.HttpURLConnection.checkMessageHeader(HttpURLConnection.java:428)
+            // at sun.net.www.protocol.http.HttpURLConnection.isExternalMessageHeaderAllowed(HttpURLConnection.java:394)
+            // at sun.net.www.protocol.http.HttpURLConnection.setRequestProperty(HttpURLConnection.java:2378)
         } finally {
             server.stop();
             Thread.sleep(100L);
@@ -435,7 +424,7 @@ public class HTTPTest {
         final HttpServer server = new HttpServer(new AbstractHandler() {
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-                    HttpServletResponse response) {
+                               HttpServletResponse response) {
                 try {
                     if (request.getHeader("H2") != null) {
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
