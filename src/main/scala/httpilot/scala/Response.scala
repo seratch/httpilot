@@ -46,6 +46,10 @@ case class Response(underlying: httpilot.Response) {
 
   def body(body: Array[Byte]) = underlying.setBody(body)
 
+  def asBytes() = body()
+
   def textBody() = underlying.getTextBody
+
+  def asString() = textBody()
 
 }

@@ -26,6 +26,8 @@ public class Request {
 
     public static final String DEFAULT_USER_AGENT = "HTTPilot (https://github.com/seratch/httpilot)";
 
+    public static final String X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
+
     public Request(String url) {
         setUrl(url);
     }

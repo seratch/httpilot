@@ -15,15 +15,40 @@
  */
 package httpilot.scala
 
-import httpilot.{ HTTP => JavaHTTP }
+import scala.collection.JavaConverters._
+import httpilot.{ HTTP => JavaHTTP, Request => JavaRequest }
 
 object HTTP {
 
   def get(req: Request) = Response(JavaHTTP.get(req))
 
+  def get(url: String, charset: String = httpilot.Request.DEFAULT_CHARSET) = {
+    Response(JavaHTTP.get(new JavaRequest(url, charset)))
+  }
+
   def post(req: Request) = Response(JavaHTTP.post(req))
 
+  def post(url: String, data: String) = {
+    Response(JavaHTTP.post(Request(url).body(data.getBytes)))
+  }
+
+  def post(url: String, formParams: Map[String, Any]) = {
+    Response(JavaHTTP.post(new JavaRequest(url, formParams.map {
+      case (k, v) => (k, v.asInstanceOf[java.lang.Object])
+    }.asJava)))
+  }
+
   def put(req: Request) = Response(JavaHTTP.put(req))
+
+  def put(url: String, data: String) = {
+    Response(JavaHTTP.put(new Request(url).body(data.getBytes)))
+  }
+
+  def put(url: String, formParams: Map[String, Any]) = {
+    Response(JavaHTTP.put(new JavaRequest(url, formParams.map {
+      case (k, v) => (k, v.asInstanceOf[java.lang.Object])
+    }.asJava)))
+  }
 
   def delete(req: Request) = Response(JavaHTTP.delete(req))
 

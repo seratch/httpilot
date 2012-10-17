@@ -20,7 +20,14 @@ object AppBuild extends Build {
       scalaVersion =>
         Seq(
           "com.github.seratch" % "httpilot" % "0.3.0-SNAPSHOT",
-          "org.specs2" %% "specs2" % "1.12.2" % "test"
+          "org.specs2" %% "specs2" % "1.12.2" % "test",
+          "junit" % "junit" % "4.10" % "test",
+          "commons-fileupload" % "commons-fileupload" % "1.2.2" % "test",
+          "commons-io" % "commons-io" % "2.0.1" % "test",
+          "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
+          "commons-httpclient" % "commons-httpclient" % "3.1" % "test",
+          "org.eclipse.jetty" % "jetty-server" % "7.5.2.v20111006" % "test",
+          "org.eclipse.jetty" % "jetty-servlet" % "7.5.2.v20111006" % "test"
         )
     },
     publishTo <<= version {

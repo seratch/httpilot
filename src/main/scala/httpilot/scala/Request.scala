@@ -57,7 +57,7 @@ case class Request(url: String) extends httpilot.Request(url) {
 
   def requestBody() = RequestBody(getRequestBody)
 
-  def body(body: Array[Byte], contentType: String) = setBody(body, contentType)
+  def body(body: Array[Byte], contentType: String = httpilot.Request.X_WWW_FORM_URLENCODED) = setBody(body, contentType)
 
   def bodyAsBytes(): Array[Byte] = getRequestBody.getBytes
 
