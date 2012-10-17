@@ -3,7 +3,7 @@ import Keys._
 
 object AppBuild extends Build {
 
-  val _version = "0.3.0-SNAPSHOT"
+  val _version = "0.3.0"
 
   lazy val libraryProject = Project(id = "library", base = file("."), settings = Defaults.defaultSettings ++ Seq(
     sbtPlugin := false,
@@ -19,7 +19,7 @@ object AppBuild extends Build {
     libraryDependencies <++= (scalaVersion) {
       scalaVersion =>
         Seq(
-          "com.github.seratch" % "httpilot" % "0.3.0-SNAPSHOT",
+          "com.github.seratch" % "httpilot" % _version,
           "org.specs2" %% "specs2" % "1.12.2" % "test",
           "junit" % "junit" % "4.10" % "test",
           "commons-fileupload" % "commons-fileupload" % "1.2.2" % "test",
