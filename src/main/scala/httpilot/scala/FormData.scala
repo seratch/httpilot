@@ -15,9 +15,19 @@
  */
 package httpilot.scala
 
-class FormData extends httpilot.FormData {
+case class FormData(name: String, bytes: Array[Byte] = null, text: TextInput = NoTextInput, file: FileInput = NoFileInput)
+    extends httpilot.FormData {
 
-  def name() = getName()
+  setName(name)
+
+  (text, file) match {
+    case (NoTextInput, NoFileInput) => setBody(body)
+    case (_, NoFileInput) => setTextBody(text.textBody, text.charset)
+    case (NoTextInput, _) => {
+      setFile(file.file)
+      setContentType(file.contentType)
+    }
+  }
 
   def name(name: String) = setName(name)
 
@@ -27,7 +37,7 @@ class FormData extends httpilot.FormData {
 
   def contentType(contentType: String) = setContentType(contentType)
 
-  def body() = getBody
+  def body() = getBody()
 
   def body(body: Array[Byte]) = setBody(body)
 
@@ -36,3 +46,11 @@ class FormData extends httpilot.FormData {
   def textBody(textBody: String, charset: String) = setTextBody(textBody, charset)
 
 }
+
+case class TextInput(textBody: String, charset: String = "UTF-8") extends httpilot.FormData.TextInput(textBody, charset)
+
+object NoTextInput extends TextInput(null, null)
+
+case class FileInput(file: java.io.File, contentType: String) extends httpilot.FormData.FileInput(file, contentType)
+
+object NoFileInput extends FileInput(null, null)

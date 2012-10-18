@@ -38,6 +38,11 @@ object HTTP {
     }.asJava)))
   }
 
+  def post(url: String, multipartFormData: Seq[FormData]) = {
+    Response(JavaHTTP.post(
+      new JavaRequest(url).setMultipartFormData(multipartFormData.map(_.asInstanceOf[httpilot.FormData]).asJava)))
+  }
+
   def put(req: Request) = Response(JavaHTTP.put(req))
 
   def put(url: String, data: String) = {
@@ -48,6 +53,11 @@ object HTTP {
     Response(JavaHTTP.put(new JavaRequest(url, formParams.map {
       case (k, v) => (k, v.asInstanceOf[java.lang.Object])
     }.asJava)))
+  }
+
+  def put(url: String, multipartFormData: Seq[FormData]) = {
+    Response(JavaHTTP.post(
+      new JavaRequest(url).setMultipartFormData(multipartFormData.map(_.asInstanceOf[httpilot.FormData]).asJava)))
   }
 
   def delete(req: Request) = Response(JavaHTTP.delete(req))

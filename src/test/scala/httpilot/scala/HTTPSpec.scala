@@ -52,6 +52,24 @@ class HTTPSpec extends Specification {
       }
     }
 
+    "post with TextInput" in {
+      val server = new _root_.server.PostFormdataServer
+      try {
+        new Thread(new Runnable() {
+          def run() {
+            server.start()
+          }
+        }).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.post("http://localhost:8888/", Seq(FormData(name = "toResponse", text = TextInput("bar"))))
+        response.status must equalTo(200)
+        response.asString must equalTo("bar")
+      } finally {
+        server.stop
+      }
+    }
+
     "put with data string" in {
       val server = new org.eclipse.jetty.server.Server(8886)
       try {
@@ -77,6 +95,24 @@ class HTTPSpec extends Specification {
         val response = HTTP.put("http://localhost:8896/", Map("foo" -> "bar"))
         response.status must equalTo(200)
         response.asString must equalTo("foo:bar")
+      } finally {
+        server.stop
+      }
+    }
+
+    "put with TextInput" in {
+      val server = new _root_.server.PostFormdataServer
+      try {
+        new Thread(new Runnable() {
+          def run() {
+            server.start()
+          }
+        }).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.put("http://localhost:8888/", Seq(FormData(name = "toResponse", text = TextInput("bar"))))
+        response.status must equalTo(200)
+        response.asString must equalTo("bar")
       } finally {
         server.stop
       }
