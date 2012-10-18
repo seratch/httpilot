@@ -4,7 +4,7 @@
 
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <packaging>jar</packaging>
 
     <name>http pilot</name>
@@ -42,13 +42,6 @@
             <email>seratch@gmail.com</email>
         </developer>
     </developers>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>junithelper.org releases</id>
-            <url>http://junithelper.googlecode.com/svn/trunk/mvn-repo/releases</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>

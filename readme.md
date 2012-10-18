@@ -1,13 +1,13 @@
 # HTTPilot: A Pretty Simple HTTP/1.1 Client for Java/Scala
 
-HTTPilot is a preety simple HTTP/1.1 client library which is written in Java.
+HTTPilot is a pretty simple HTTP/1.1 client library which is written in Java.
 
 ## Getting Started
 
 ### Scala via xsbt
 
 ```scala
-libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.0"
+libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.1"
 ```
 
 ### Java via Maven
@@ -17,7 +17,7 @@ libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.0"
   <dependency>
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
   </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.0"
 ### Groovy via Grape
 
 ```groovy
-@Grab('com.github.seratch:httpilot:0.3.0')
+@Grab('com.github.seratch:httpilot:0.3.1')
 
 import httpilot.*;
 response = HTTP.get(new Request("http://seratch.github.com"));
