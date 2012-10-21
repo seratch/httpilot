@@ -7,7 +7,7 @@ HTTPilot is a pretty simple HTTP/1.1 client library which is written in Java.
 ### Scala via xsbt
 
 ```scala
-libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.1"
+libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.2"
 ```
 
 ### Java via Maven
@@ -17,7 +17,7 @@ libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.1"
   <dependency>
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
   </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ libraryDependencies += "com.github.seratch" %% "httpliot-scala" % "0.3.1"
 ### Groovy via Grape
 
 ```groovy
-@Grab('com.github.seratch:httpilot:0.3.1')
+@Grab('com.github.seratch:httpilot:0.3.2')
 
 import httpilot.*;
 response = HTTP.get(new Request("http://seratch.github.com"));

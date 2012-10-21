@@ -4,10 +4,10 @@
 
     <groupId>com.github.seratch</groupId>
     <artifactId>httpilot</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <packaging>jar</packaging>
 
-    <name>http pilot</name>
+    <name>HTTPilot</name>
     <url>https://github.com/seratch/httpilot</url>
 
     <parent>
