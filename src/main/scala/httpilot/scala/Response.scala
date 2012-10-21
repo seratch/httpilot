@@ -27,6 +27,10 @@ case class Response(underlying: httpilot.Response) {
 
   def headers(headers: Map[String, String]) = underlying.setHeaders(headers.asJava)
 
+  def cookies(): Map[String, String] = underlying.getCookies.asScala.toMap
+
+  def cookies(cookies: Map[String, String]) = underlying.setCookies(cookies.asJava)
+
   def headerFields(): Map[String, Seq[String]] = underlying.getHeaderFields.asScala.map {
     case (k, v) => (k, v.asScala.toSeq)
   }.toMap

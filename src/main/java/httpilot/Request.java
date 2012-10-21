@@ -192,16 +192,16 @@ public class Request {
     }
 
     public Request setBody(byte[] body, String contentType) {
-        this.requestBody.setBody(body, contentType);
+        this.getRequestBody().setBody(body, contentType);
         return this;
     }
 
-    public byte[] getSpecifiedBody() {
-        return requestBody.getBytes();
+    public byte[] getBytes() {
+        return getRequestBody().getBytes();
     }
 
-    public String getSpecifiedContentType() {
-        return requestBody.getContentType();
+    public String getContentType() {
+        return getRequestBody().getContentType();
     }
 
     public Map<String, Object> getFormParams() {

@@ -28,6 +28,8 @@ public class Response {
 
     private Map<String, List<String>> headerFields = new HashMap<String, List<String>>();
 
+    private Map<String, String> cookies = new HashMap<String, String>();
+
     private String charset;
 
     private byte[] body;
@@ -54,6 +56,14 @@ public class Response {
 
     public void setHeaderFields(Map<String, List<String>> headerFields) {
         this.headerFields = headerFields;
+    }
+
+    public Map<String, String> getCookies() {
+        return cookies;
+    }
+
+    public void setCookies(Map<String, String> cookies) {
+        this.cookies = cookies;
     }
 
     public void setCharset(String charset) {

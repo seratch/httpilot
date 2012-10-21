@@ -19,6 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HTTP {
@@ -66,12 +67,12 @@ public class HTTP {
         String exceptionMessage = "";
         InputStream is = null;
         try {
-            if (request.getSpecifiedBody() != null) {
+            if (request.getBytes() != null) {
                 conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", request.getSpecifiedContentType());
+                conn.setRequestProperty("Content-Type", request.getContentType());
                 OutputStream os = conn.getOutputStream();
                 try {
-                    os.write(request.getSpecifiedBody());
+                    os.write(request.getBytes());
                 } finally {
                     IO.close(os);
                 }
@@ -115,9 +116,25 @@ public class HTTP {
         response.setHeaderFields(conn.getHeaderFields());
         Map<String, String> headers = new HashMap<String, String>();
         for (String headerName : conn.getHeaderFields().keySet()) {
+            if (headerName != null && headerName.equals("Set-Cookie")) {
+                continue;
+            }
             headers.put(headerName, conn.getHeaderField(headerName));
         }
         response.setHeaders(headers);
+
+        Map<String, String> cookies = new HashMap<String, String>();
+        List<String> cookieFields = conn.getHeaderFields().get("Set-Cookie");
+        if (cookieFields != null) {
+            for (String cookieField : cookieFields) {
+                String[] splitted = cookieField.split("=");
+                if (splitted.length > 0) {
+                    String name = splitted[0];
+                    cookies.put(name, cookieField);
+                }
+            }
+        }
+        response.setCookies(cookies);
 
         if (is != null) {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
