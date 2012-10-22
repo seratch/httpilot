@@ -21,21 +21,21 @@ case class Response(underlying: httpilot.Response) {
 
   def status(): Int = underlying.getStatus
 
-  def status(status: Int) = underlying.setStatus(status)
+  def status(status: Int): Unit = underlying.setStatus(status)
 
   def headers(): Map[String, String] = underlying.getHeaders.asScala.toMap
 
-  def headers(headers: Map[String, String]) = underlying.setHeaders(headers.asJava)
+  def headers(headers: Map[String, String]): Unit = underlying.setHeaders(headers.asJava)
 
   def cookies(): Map[String, String] = underlying.getCookies.asScala.toMap
 
-  def cookies(cookies: Map[String, String]) = underlying.setCookies(cookies.asJava)
+  def cookies(cookies: Map[String, String]): Unit = underlying.setCookies(cookies.asJava)
 
   def headerFields(): Map[String, Seq[String]] = underlying.getHeaderFields.asScala.map {
     case (k, v) => (k, v.asScala.toSeq)
   }.toMap
 
-  def headerFields(fields: Map[String, Seq[String]]) = {
+  def headerFields(fields: Map[String, Seq[String]]): Unit = {
     val toValueAsJava: Map[String, java.util.List[String]] = fields.map {
       case (k: String, v: Seq[_]) => (k, v.asJava.asInstanceOf[java.util.List[String]])
     }
@@ -44,11 +44,11 @@ case class Response(underlying: httpilot.Response) {
 
   def charset(): String = underlying.getCharset
 
-  def charset(charset: String) = underlying.setCharset(charset)
+  def charset(charset: String): Unit = underlying.setCharset(charset)
 
   def body(): Array[Byte] = underlying.getBody
 
-  def body(body: Array[Byte]) = underlying.setBody(body)
+  def body(body: Array[Byte]): Unit = underlying.setBody(body)
 
   def asBytes(): Array[Byte] = body()
 

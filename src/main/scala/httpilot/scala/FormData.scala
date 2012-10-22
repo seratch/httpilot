@@ -29,21 +29,21 @@ case class FormData(name: String, bytes: Array[Byte] = null, text: TextInput = N
     }
   }
 
-  def name(name: String) = setName(name)
+  def name(name: String): Unit = setName(name)
 
-  def filename() = getFilename
+  def filename(): String = getFilename
 
-  def contentType() = getContentType
+  def contentType(): String = getContentType
 
-  def contentType(contentType: String) = setContentType(contentType)
+  def contentType(contentType: String): Unit = setContentType(contentType)
 
-  def body() = getBody()
+  def body(): Array[Byte] = getBody()
 
-  def body(body: Array[Byte]) = setBody(body)
+  def body(body: Array[Byte]): Unit = setBody(body)
 
-  def file(file: java.io.File) = setFile(file)
+  def file(file: java.io.File): Unit = setFile(file)
 
-  def textBody(textBody: String, charset: String) = setTextBody(textBody, charset)
+  def textBody(textBody: String, charset: String): Unit = setTextBody(textBody, charset)
 
 }
 

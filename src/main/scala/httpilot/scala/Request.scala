@@ -19,62 +19,106 @@ import scala.collection.JavaConverters._
 
 case class Request(url: String) extends httpilot.Request(url) {
 
-  def enableThrowingIOException(enabled: Boolean) = setEnableThrowingIOException(enabled)
+  def enableThrowingIOException(enabled: Boolean): Request = {
+    setEnableThrowingIOException(enabled)
+    this
+  }
 
-  def url(url: String) = setUrl(url)
+  def url(url: String): Request = {
+    setUrl(url)
+    this
+  }
 
-  def connectTimeoutMillis() = getConnectTimeoutMillis
+  def connectTimeoutMillis(): Int = getConnectTimeoutMillis
 
-  def connectTimeoutMillis(millis: Int) = setConnectTimeoutMillis(millis)
+  def connectTimeoutMillis(millis: Int): Request = {
+    setConnectTimeoutMillis(millis)
+    this
+  }
 
-  def readTimeoutMillis() = getReadTimeoutMillis
+  def readTimeoutMillis(): Int = getReadTimeoutMillis
 
-  def readTimeoutMillis(millis: Int) = setReadTimeoutMillis(millis)
+  def readTimeoutMillis(millis: Int): Request = {
+    setReadTimeoutMillis(millis)
+    this
+  }
 
-  def referer() = getReferer
+  def referer(): String = getReferer
 
-  def referer(referer: String) = setReferer(referer)
+  def referer(referer: String): Request = {
+    setReferer(referer)
+    this
+  }
 
-  def userAgent() = getUserAgent
+  def userAgent(): String = getUserAgent
 
-  def userAgent(ua: String) = setUserAgent(ua)
+  def userAgent(ua: String): Request = {
+    setUserAgent(ua)
+    this
+  }
 
-  def charset() = getCharset
+  def charset(): String = getCharset
 
-  def charset(charset: String) = setCharset(charset)
+  def charset(charset: String): Request = {
+    setCharset(charset)
+    this
+  }
 
-  def headerNames() = getHeaderNames.asScala
+  def headerNames(): Set[String] = getHeaderNames.asScala.toSet
 
-  def header(name: String) = getHeader(name)
+  def header(name: String): String = getHeader(name)
 
-  def header(name: String, value: String) = setHeader(name, value)
+  def header(name: String, value: String): Request = {
+    setHeader(name, value)
+    this
+  }
 
-  def queryParams() = getQueryParams.asScala
+  def queryParams(): Map[String, Any] = getQueryParams.asScala.toMap
 
-  def queryParams(queryParams: Map[String, Any]) = setQueryParams(queryParams.map {
-    case (k, v) => (k, v.asInstanceOf[java.lang.Object])
-  }.asJava)
+  def queryParams(queryParams: Map[String, Any]): Request = {
+    setQueryParams(queryParams.map {
+      case (k, v) => (k, v.asInstanceOf[java.lang.Object])
+    }.asJava)
+    this
+  }
 
-  def requestBody() = RequestBody(getRequestBody)
+  def requestBody(): RequestBody = RequestBody(getRequestBody)
 
-  def body(body: Array[Byte], contentType: String = httpilot.Request.X_WWW_FORM_URLENCODED) = setBody(body, contentType)
+  def body(body: Array[Byte], contentType: String = httpilot.Request.X_WWW_FORM_URLENCODED): Request = {
+    setBody(body, contentType)
+    this
+  }
 
   def bodyAsBytes(): Array[Byte] = getRequestBody.getBytes
 
-  def contentType() = requestBody.contentType
+  def contentType(): Request = {
+    requestBody.contentType
+    this
+  }
 
-  def contentType(contentType: String) = requestBody.contentType(contentType)
+  def contentType(contentType: String): Request = {
+    requestBody.contentType(contentType)
+    this
+  }
 
-  def formParams() = getFormParams.asScala
+  def formParams(): Map[String, Any] = getFormParams.asScala.toMap
 
-  def formParams(formParams: Map[String, Any]) = setFormParams(formParams.map {
-    case (k, v) => (k, v.asInstanceOf[java.lang.Object])
-  }.asJava)
+  def formParams(formParams: Map[String, Any]): Request = {
+    setFormParams(formParams.map {
+      case (k, v) => (k, v.asInstanceOf[java.lang.Object])
+    }.asJava)
+    this
+  }
 
-  def multipartFormData() = getMultipartFormData.asScala
+  def multipartFormData(): List[FormData] = getMultipartFormData.asScala.map { j: httpilot.FormData =>
+    FormData(name = j.getName, bytes = j.getBody)
+  }.toList
 
-  def multipartFormData(formData: List[FormData]) = setMultipartFormData(
-    formData.map(f => f.asInstanceOf[httpilot.FormData]).asJava
-  )
+  def multipartFormData(formData: List[FormData]): Request = {
+    setMultipartFormData(
+      formData.map(f => f.asInstanceOf[httpilot.FormData]).asJava
+    )
+    this
+  }
 
 }

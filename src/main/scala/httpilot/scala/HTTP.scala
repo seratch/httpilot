@@ -20,54 +20,60 @@ import httpilot.{ HTTP => JavaHTTP, Request => JavaRequest }
 
 object HTTP {
 
-  def get(req: Request) = Response(JavaHTTP.get(req))
+  def get(req: Request): Response = Response(JavaHTTP.get(req))
 
-  def get(url: String, charset: String = httpilot.Request.DEFAULT_CHARSET) = {
+  def get(url: String, charset: String = httpilot.Request.DEFAULT_CHARSET): Response = {
     Response(JavaHTTP.get(new JavaRequest(url, charset)))
   }
 
-  def post(req: Request) = Response(JavaHTTP.post(req))
+  def get(url: String, queryParams: Map[String, Any]): Response = {
+    Response(JavaHTTP.get(new JavaRequest(url).setQueryParams(queryParams.map {
+      case (k, v) => (k, v.asInstanceOf[java.lang.Object])
+    }.asJava)))
+  }
 
-  def post(url: String, data: String) = {
+  def post(req: Request): Response = Response(JavaHTTP.post(req))
+
+  def post(url: String, data: String): Response = {
     Response(JavaHTTP.post(Request(url).body(data.getBytes)))
   }
 
-  def post(url: String, formParams: Map[String, Any]) = {
+  def post(url: String, formParams: Map[String, Any]): Response = {
     Response(JavaHTTP.post(new JavaRequest(url, formParams.map {
       case (k, v) => (k, v.asInstanceOf[java.lang.Object])
     }.asJava)))
   }
 
-  def post(url: String, multipartFormData: Seq[FormData]) = {
+  def post(url: String, multipartFormData: Seq[FormData]): Response = {
     Response(JavaHTTP.post(
       new JavaRequest(url).setMultipartFormData(multipartFormData.map(_.asInstanceOf[httpilot.FormData]).asJava)))
   }
 
-  def put(req: Request) = Response(JavaHTTP.put(req))
+  def put(req: Request): Response = Response(JavaHTTP.put(req))
 
-  def put(url: String, data: String) = {
+  def put(url: String, data: String): Response = {
     Response(JavaHTTP.put(new Request(url).body(data.getBytes)))
   }
 
-  def put(url: String, formParams: Map[String, Any]) = {
+  def put(url: String, formParams: Map[String, Any]): Response = {
     Response(JavaHTTP.put(new JavaRequest(url, formParams.map {
       case (k, v) => (k, v.asInstanceOf[java.lang.Object])
     }.asJava)))
   }
 
-  def put(url: String, multipartFormData: Seq[FormData]) = {
+  def put(url: String, multipartFormData: Seq[FormData]): Response = {
     Response(JavaHTTP.post(
       new JavaRequest(url).setMultipartFormData(multipartFormData.map(_.asInstanceOf[httpilot.FormData]).asJava)))
   }
 
-  def delete(req: Request) = Response(JavaHTTP.delete(req))
+  def delete(req: Request): Response = Response(JavaHTTP.delete(req))
 
-  def head(req: Request) = Response(JavaHTTP.head(req))
+  def head(req: Request): Response = Response(JavaHTTP.head(req))
 
-  def options(req: Request) = Response(JavaHTTP.options(req))
+  def options(req: Request): Response = Response(JavaHTTP.options(req))
 
-  def trace(req: Request) = Response(JavaHTTP.trace(req))
+  def trace(req: Request): Response = Response(JavaHTTP.trace(req))
 
-  def request(method: Method, req: Request) = Response(JavaHTTP.request(method, req))
+  def request(method: Method, req: Request): Response = Response(JavaHTTP.request(method, req))
 
 }

@@ -11,15 +11,67 @@ class HTTPSpec extends Specification {
   "HTTP" should {
 
     "get" in {
-      val response = HTTP.get("https://github.com/seratch/httpilot")
-      response.status must equalTo(200)
-      response.asString.length must be_>(0)
+      val server = new org.eclipse.jetty.server.Server(8877)
+      try {
+        server.setHandler(getHandler)
+        new Thread(runnable(server)).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.get("http://localhost:8877/?foo=bar")
+        response.status must equalTo(200)
+        response.asString.length must be_>(0)
+        response.asString must equalTo("foo:bar")
+      } finally {
+        server.stop
+      }
+    }
+
+    "get with queryParams" in {
+      val server = new org.eclipse.jetty.server.Server(8877)
+      try {
+        server.setHandler(getHandler)
+        new Thread(runnable(server)).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.get("http://localhost:8877/", Map("foo" -> "bar"))
+        response.status must equalTo(200)
+        response.asString.length must be_>(0)
+        response.asString must equalTo("foo:bar")
+      } finally {
+        server.stop
+      }
+    }
+
+    "get using queryParams method" in {
+      val server = new org.eclipse.jetty.server.Server(8877)
+      try {
+        server.setHandler(getHandler)
+        new Thread(runnable(server)).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.get(Request("http://localhost:8877/").queryParams(Map("foo" -> "bar")))
+        response.status must equalTo(200)
+        response.asString.length must be_>(0)
+        response.asString must equalTo("foo:bar")
+      } finally {
+        server.stop
+      }
     }
 
     "get with charset" in {
-      val response = HTTP.get("https://github.com/seratch/httpilot", "UTF-8")
-      response.status must equalTo(200)
-      response.asString.length must be_>(0)
+      val server = new org.eclipse.jetty.server.Server(8877)
+      try {
+        server.setHandler(getHandler)
+        new Thread(runnable(server)).start()
+        Thread.sleep(300L)
+
+        val response = HTTP.get("http://localhost:8877/?foo=bar", "UTF-8")
+        response.status must equalTo(200)
+        response.asString.length must be_>(0)
+        response.asString must equalTo("foo:bar")
+      } finally {
+        server.stop
+      }
     }
 
     "post with data string" in {
@@ -130,6 +182,23 @@ class HTTPSpec extends Specification {
           case e => e.printStackTrace
         }
       }
+    }
+  }
+
+  val getHandler = new AbstractHandler {
+    def handle(target: String, baseReq: BaseRequest, req: HttpServletRequest, resp: HttpServletResponse) = {
+      try {
+        if (req.getMethod().equals("GET")) {
+          val foo = req.getParameter("foo")
+          val result = "foo:" + foo
+          resp.setCharacterEncoding("UTF-8")
+          resp.getWriter().print(result)
+          baseReq.setHandled(true)
+          resp.setStatus(HttpServletResponse.SC_OK)
+        } else {
+          resp.setStatus(HttpServletResponse.SC_FORBIDDEN)
+        }
+      } catch { case e => e.printStackTrace }
     }
   }
 

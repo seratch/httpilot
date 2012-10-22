@@ -17,12 +17,18 @@ package httpilot.scala
 
 case class RequestBody(underlying: httpilot.RequestBody) {
 
-  def bytes() = underlying.getBytes
+  def bytes(): Array[Byte] = underlying.getBytes
 
-  def contentType = underlying.getContentType
+  def contentType(): String = underlying.getContentType
 
-  def body(body: Array[Byte], contentType: String) = underlying.setBody(body, contentType)
+  def body(body: Array[Byte], contentType: String): RequestBody = {
+    underlying.setBody(body, contentType)
+    this
+  }
 
-  def contentType(contentType: String) = underlying.setContentType(contentType)
+  def contentType(contentType: String): RequestBody = {
+    underlying.setContentType(contentType)
+    this
+  }
 
 }
